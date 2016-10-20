@@ -879,7 +879,7 @@
     self.backButton.enabled = theWebView.canGoBack;
     self.forwardButton.enabled = theWebView.canGoForward;
 
-    [self.spinner startAnimating];
+    //[self.spinner startAnimating];
 
     return [self.navigationDelegate webViewDidStartLoad:theWebView];
 }
