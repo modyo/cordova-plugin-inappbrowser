@@ -69,11 +69,11 @@
 
 - (BOOL) isSystemUrl:(NSURL*)url
 {
-	if ([[url host] isEqualToString:@"itunes.apple.com"]) {
-		return YES;
-	}
+    if ([[url host] isEqualToString:@"itunes.apple.com"]) {
+        return YES;
+    }
 
-	return NO;
+    return NO;
 }
 
 - (void)open:(CDVInvokedUrlCommand*)command
@@ -267,6 +267,24 @@
     });
 }
 
+- (void)hideSpinner:(CDVInvokedUrlCommand*)command
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.inAppBrowserViewController != nil) {
+            self.inAppBrowserViewController.spinner.hidden = NO;
+        }
+    });
+}
+
+- (void)showSpinner:(CDVInvokedUrlCommand*)command
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.inAppBrowserViewController != nil) {
+            self.inAppBrowserViewController.spinner.hidden = YES;
+        }
+    });
+}
+
 - (void)openInCordovaWebView:(NSURL*)url withOptions:(NSString*)options
 {
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
@@ -379,6 +397,8 @@
     }
     return NO;
 }
+
+
 
 /**
  * The iframe bridge provided for the InAppBrowser is capable of executing any oustanding callback belonging
@@ -561,7 +581,9 @@
     self.spinner.clipsToBounds = NO;
     self.spinner.contentMode = UIViewContentModeScaleToFill;
     self.spinner.frame = CGRectMake(CGRectGetMidX(self.webView.frame), CGRectGetMidY(self.webView.frame), 20.0, 20.0);
-    self.spinner.hidden = YES;
+
+    self.spinner.hidden = NO;
+
     self.spinner.hidesWhenStopped = YES;
     self.spinner.multipleTouchEnabled = NO;
     self.spinner.opaque = NO;
@@ -639,7 +661,13 @@
     self.view.backgroundColor = [UIColor grayColor];
     [self.view addSubview:self.toolbar];
     [self.view addSubview:self.addressLabel];
-    [self.view addSubview:self.spinner];
+
+    //dont add the spinner if its hidden.
+    if (_browserOptions.spinner)
+    {
+        [self.view addSubview:self.spinner];
+    }
+
 }
 
 - (void) setWebViewFrame : (CGRect) frame {
@@ -879,7 +907,7 @@
     self.backButton.enabled = theWebView.canGoBack;
     self.forwardButton.enabled = theWebView.canGoForward;
 
-    //[self.spinner startAnimating];
+    [self.spinner startAnimating];
 
     return [self.navigationDelegate webViewDidStartLoad:theWebView];
 }
@@ -975,6 +1003,7 @@
         // default values
         self.location = YES;
         self.toolbar = YES;
+        self.spinner = YES;
         self.closebuttoncaption = nil;
         self.toolbarposition = kInAppBrowserToolbarBarPositionBottom;
         self.clearcache = NO;
