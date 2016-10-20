@@ -55,6 +55,12 @@
         hide: function (eventname) {
             exec(null, null, "InAppBrowser", "hide", []);
         },
+        showSpinner: function (eventname) {
+            exec(null, null, "InAppBrowser", "showSpinner", []);
+        },
+        hideSpinner: function (eventname) {
+            exec(null, null, "InAppBrowser", "hideSpinner", []);
+        },
         addEventListener: function (eventname,f) {
             if (eventname in this.channels) {
                 this.channels[eventname].subscribe(f);
