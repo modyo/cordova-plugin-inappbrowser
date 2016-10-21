@@ -271,7 +271,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.inAppBrowserViewController != nil) {
-            self.inAppBrowserViewController.spinner.hidden = NO;
+            self.inAppBrowserViewController.spinner.hidden = YES;
         }
     });
 }
@@ -280,7 +280,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.inAppBrowserViewController != nil) {
-            self.inAppBrowserViewController.spinner.hidden = YES;
+            self.inAppBrowserViewController.spinner.hidden = NO;
         }
     });
 }
