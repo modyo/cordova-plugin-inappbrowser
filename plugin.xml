@@ -241,5 +241,7 @@
         <js-module src="src/browser/InAppBrowserProxy.js" name="InAppBrowserProxy">
             <merges target="" />
         </js-module>
+
+        <asset src="www/inappbrowser_providers.js" target="js/inappbrowser_providers.js" />
     </platform>
 </plugin>
